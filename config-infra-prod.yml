@@ -8,7 +8,7 @@ variables:
   ap_vm_image: ubuntu-20.04
 
   namespace: mlopslite #Note: A namespace with many characters will cause storage account creation to fail due to storage account names having a limit of 24 characters.
-  postfix: ao04
+  postfix: taxi_fares_regression
   location: northeurope
 
   environment: prod
@@ -38,4 +38,5 @@ variables:
   terraform_st_storage_account: st$(namespace)$(postfix)$(environment)tf
   terraform_st_container_name: default
   terraform_st_key: mlops-tab
+
 
