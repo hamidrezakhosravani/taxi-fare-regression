@@ -10,7 +10,7 @@ jobs:
   register-environment:
       needs: get-config
       #uses: Azure/mlops-templates/.github/workflows/register-environment.yml@main
-      uses: Azure/mlops-templates/.github/workflows/register-environment.yml@ce76f1837f95a1d5142f6aaa24ce5de21e079695
+      uses: Azure/mlops-templates/.github/workflows/register-environment.yml@db9af63fb8862451146a913b3ec9d343f3126a3e
       with:
         resource_group: ${{ needs.get-config.outputs.resource_group }}
         workspace_name: ${{ needs.get-config.outputs.aml_workspace }}     
