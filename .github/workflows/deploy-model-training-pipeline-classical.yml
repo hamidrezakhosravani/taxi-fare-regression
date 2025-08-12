@@ -45,7 +45,7 @@ jobs:
       with:
         cluster_name: cpu-cluster
         # size: Standard_DS3_v2
-        size: Standard Dv2 Family vCPUs
+        size: Standard DS2_v2
         min_instances: 0
         max_instances: 4
         cluster_tier: low_priority
