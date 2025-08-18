@@ -4,13 +4,12 @@ on:
   workflow_dispatch:
 jobs:
   get-config:
-      uses: Azure/mlops-templates/.github/workflows/read-yaml.yml@main
+      uses: cegid/mlops-templates/.github/workflows/read-yaml.yml@main
       with:
         file_name: config-infra-prod.yml
   register-environment:
       needs: get-config
-      # uses: Azure/mlops-templates/.github/workflows/register-environment.yml@main
-      uses: hamidrezakhosravani/mlops-templates/.github/workflows/register-environment.yml@main
+      uses: cegid/mlops-templates/.github/workflows/register-environment.yml@main
       with:
         resource_group: ${{ needs.get-config.outputs.resource_group }}
         workspace_name: ${{ needs.get-config.outputs.aml_workspace }}     
@@ -18,18 +17,10 @@ jobs:
         conda_file: data-science/environment/train-conda.yml
       secrets:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          #client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          #tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          #subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          #AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          #AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          #AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          #AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           
   register-dataset:
     needs: get-config
-    # uses: Azure/mlops-templates/.github/workflows/register-dataset.yml@main
-    uses: hamidrezakhosravani/mlops-templates/.github/workflows/register-dataset.yml@main
+    uses: cegid/mlops-templates/.github/workflows/register-dataset.yml@main
     with:
       resource_group: ${{ needs.get-config.outputs.resource_group }}
       workspace_name: ${{ needs.get-config.outputs.aml_workspace }}
@@ -40,8 +31,7 @@ jobs:
       
   create-compute:
       needs: [get-config,register-environment,register-dataset]
-      # uses: Azure/mlops-templates/.github/workflows/create-compute.yml@main
-      uses: hamidrezakhosravani/mlops-templates/.github/workflows/create-compute.yml@main
+      uses: cegid/mlops-templates/.github/workflows/create-compute.yml@main
       with:
         cluster_name: cpu-cluster
         # size: Standard_DS3_v2
@@ -57,8 +47,7 @@ jobs:
       
   run-pipeline:
       needs: [get-config,register-environment,create-compute,register-dataset]
-      # uses: Azure/mlops-templates/.github/workflows/run-pipeline.yml@main
-      uses: hamidrezakhosravani/mlops-templates/.github/workflows/run-pipeline.yml@main
+      uses: cegid/mlops-templates/.github/workflows/run-pipeline.yml@main
       with:
         resource_group: ${{ needs.get-config.outputs.resource_group }}
         workspace_name: ${{ needs.get-config.outputs.aml_workspace }}     
